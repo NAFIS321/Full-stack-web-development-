@@ -1,0 +1,10 @@
+.navbar {
+    background-color: rgb(199, 162, 42);
+    padding: 10px;
+    display: flex;
+    gap: 20px;
+    
+}
+.room {
+    text-decoration: none;
+}
