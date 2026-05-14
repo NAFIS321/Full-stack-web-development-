@@ -4,10 +4,17 @@ const app = express();
 const port = 3000;
 
 // app.use(logger);
-function logger (req, res, next) {
+/*function logger (req, res, next) {
 console.log ("Request method: ", req.method);
 console.log("request URL:", req.url);
 next();
+};
+app.use(logger);*/
+function logger (req,res,next){
+ console.log("Rquest method",req.mathod);
+ console.log("requst URL",req.url);
+ next();
+
 };
 app.use(logger);
 app.get("/", (req, res) => {
