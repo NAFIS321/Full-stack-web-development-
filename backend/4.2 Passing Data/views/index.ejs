@@ -8,7 +8,18 @@
 </head>
 
 <body>
+ 
+
+  <% if (locals.numberOfLetters){ %>
+   <h1> This is your number<%= numberOfLetters %> of letter !!!!</h1>
+
+  <% }else { %> 
+    
   <!-- Write your code here -->
+   <h1>Write Down Your Name Sir !!!!!</h1>
+
+ <% } %> 
+ 
   <form action="/submit" method="POST">
     <input type="text" name="fName" placeholder="First name">
     <input type="text" name="lName" placeholder="Last name">
