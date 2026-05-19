@@ -1,0 +1,78 @@
+<%- include('partials/header.ejs'); -%> 
+// Includes the header partial file (common HTML head, styles, nav, etc.)
+
+<div class="box" id="heading">
+  <h1>
+    <%= listTitle %> 
+    // Displays the list title passed from server (e.g., "Today")
+  </h1>
+</div>
+
+<div class="box">
+  <% for(let item of listItems){ %> 
+  // Loop through each item in listItems array (coming from DB)
+
+    <div class="item">
+      <form action="/delete" method="post">
+        <input type="checkbox" onchange="this.form.submit()" 
+               name="deleteItemId" value="<%= item.id %>">
+        // Checkbox tied to delete form. When checked, auto-submits form.
+        // Sends item.id as deleteItemId to server.
+      </form>
+
+      <p id="title<%=item.id%>">
+        <%= item.title %> 
+        // Shows the item title text (e.g., "Buy milk")
+      </p>
+
+      <form class="edit" action="/edit" method="post">
+        <input type="hidden" name="updatedItemId" value="<%= item.id %>">
+        // Hidden field to send item id when editing
+
+        <input id="input<%=item.id%>" type="text" name="updatedItemTitle" 
+               value="<%= item.title %>" autocomplete="off"
+               autofocus="true" hidden="true" />
+        // Text input for editing item title. Hidden by default.
+
+        <button id="done<%=item.id%>" class="edit" type="submit" hidden>
+          <img class="icon" src="/assets/icons/check-solid.svg" alt="tick image">
+        </button>
+        // Submit button (with check icon) to confirm edit. Hidden by default.
+      </form>
+
+      <button id="edit<%=item.id%>" class="edit" onclick="handler('<%=item.id%>')">
+        <img class="icon" src="/assets/icons/pencil-solid.svg" alt="pencil image">
+      </button>
+      // Edit button (pencil icon). Calls handler() JS function to toggle edit mode.
+    </div>
+  <% } %> 
+  // End of loop through listItems
+
+  <form class="item" action="/add" method="post">
+    <input type="text" name="newItem" placeholder="New Item" autocomplete="off" autofocus="true" />
+    // Input field to add a new item
+
+    <button class="add" type="submit" name="list" value=<%=listTitle %> >+</button>
+    // Add button. Submits new item to /add route. Passes listTitle as value.
+  </form>
+</div>
+
+<script>
+  function handler(id) {
+    // Function to toggle edit mode for a specific item
+    document.getElementById("title" + id).setAttribute("hidden", true)
+    // Hide the title text
+
+    document.getElementById("edit" + id).setAttribute("hidden", true)
+    // Hide the pencil edit button
+
+    document.getElementById("done" + id).removeAttribute("hidden")
+    // Show the check (done) button
+
+    document.getElementById("input" + id).removeAttribute("hidden")
+    // Show the text input for editing
+  }
+</script>
+
+<%- include('partials/footer.ejs'); -%> 
+// Includes the footer partial file (common closing HTML, scripts, etc.)
