@@ -1,69 +1,84 @@
-import express from "express";
-import bodyParser from "body-parser";
-import pg from "pg";
+import express from "express"; // Import Express framework to build the web server
+import bodyParser from "body-parser"; // Import body-parser to parse form data (POST requests)
+import pg from "pg"; // Import 'pg' library to connect and query PostgreSQL database
 
+const app = express(); // Create Express application instance
+const port = 3000;     // Define port number for server
+
+// Configure PostgreSQL client connection
 const db = new pg.Client({
-  user: "postgres",
-  host: "localhost",
-  database: "world",
-  password: "123456789",
-  port: 5432,
+  user: "postgres",       // Database username
+  host: "localhost",      // Database host (local machine)
+  database: "world",      // Database name (must exist in PostgreSQL)
+  password: "123456789",  // Database password
+  port: 5432,             // Default PostgreSQL port
 });
 
-const app = express();
-const port = 3000;
+db.connect(); // Establish connection to PostgreSQL database
 
-db.connect();
+// Initial quiz data (fallback if DB not loaded yet)
+let quiz = [
+  { country: "France", capital: "Paris" },
+  { country: "United Kingdom", capital: "London" },
+  { country: "United States of America", capital: "New York" },
+];
 
-let quiz = [];
+// Query database for all capitals
 db.query("SELECT * FROM capitals", (err, res) => {
   if (err) {
-    console.error("Error executing query", err.stack);
+    console.error("Error executing query", err.stack); // Log error if query fails
   } else {
-    quiz = res.rows;
+    quiz = res.rows; // Replace quiz array with rows from DB
   }
-  db.end();
+  db.end(); // Close database connection after fetching data
 });
 
-let totalCorrect = 0;
+let totalCorrect = 0; // Track total correct answers
 
-// Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
+// Middleware setup
+app.use(bodyParser.urlencoded({ extended: true })); // Parse form submissions
+app.use(express.static("public")); // Serve static files (CSS, JS, images) from "public" folder
 
-let currentQuestion = {};
+let currentQuestion = {}; // Store the current quiz question
 
-// GET home page
+// Route: GET homepage
 app.get("/", async (req, res) => {
-  totalCorrect = 0;
-  await nextQuestion();
-  console.log(currentQuestion);
-  res.render("index.ejs", { question: currentQuestion });
+  totalCorrect = 0; // Reset score when starting fresh
+  await nextQuestion(); // Pick a random question
+  console.log(currentQuestion); // Log current question for debugging
+  res.render("index.ejs", { question: currentQuestion }); 
+  // Render EJS template with current question
 });
 
-// POST a new post
+// Route: POST submit answer
 app.post("/submit", (req, res) => {
-  let answer = req.body.answer.trim();
-  let isCorrect = false;
+  let answer = req.body.answer.trim(); // Get submitted answer from form
+  let isCorrect = false; // Flag for correctness
+
+  // Compare submitted answer with correct capital (case-insensitive)
   if (currentQuestion.capital.toLowerCase() === answer.toLowerCase()) {
-    totalCorrect++;
-    console.log(totalCorrect);
-    isCorrect = true;
+    totalCorrect++; // Increase score if correct
+    console.log(totalCorrect); // Log score
+    isCorrect = true; // Mark as correct
   }
 
-  nextQuestion();
+  nextQuestion(); // Load next random question
+
+  // Render template with feedback
   res.render("index.ejs", {
-    question: currentQuestion,
-    wasCorrect: isCorrect,
-    totalScore: totalCorrect,
+    question: currentQuestion, // Next question
+    wasCorrect: isCorrect,     // Whether last answer was correct
+    totalScore: totalCorrect,  // Current score
   });
 });
 
+// Function: pick next random question
 async function nextQuestion() {
   const randomCountry = quiz[Math.floor(Math.random() * quiz.length)];
-  currentQuestion = randomCountry;
+  currentQuestion = randomCountry; // Store chosen question
 }
 
+// Start server
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
