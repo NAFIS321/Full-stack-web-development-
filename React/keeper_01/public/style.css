@@ -1,0 +1,60 @@
+* {
+padding: 0;
+margin: 0;
+box-sizing: border-box;
+}
+
+html {
+font-family: "Montserrat", sans-serif;
+}
+
+/* Reset some default spacing */
+body {
+  margin: 0;
+  font-family: "Arial", sans-serif;
+  background-color: #e6c3c3;
+}
+
+/* Header bar */
+header {
+  background-color: #f5ba13;   /* Keeper yellow */
+  padding: 16px 32px;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Note card */
+.note {
+  background: white;
+  border-radius: 7px;
+  box-shadow: 0 2px 5px #ccc;
+  padding: 16px;
+  margin: 16px;
+  width: 240px;
+  float: left;
+}
+
+.note h1 {
+  font-size: 1.2rem;
+  margin-bottom: 6px;
+}
+
+.note p {
+  font-size: 1rem;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+/* Footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  color: #555;
+  padding: 10px;
+  background-color: #f1f1f1;
+  font-size: 0.9rem;
+}

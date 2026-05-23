@@ -1,0 +1,62 @@
+/* General reset */
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #a7c3c5;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+/* Title */
+h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin: 20px 0;
+}
+
+/* Dictionary container */
+.dictionary {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Each card */
+.term {
+  background: #eedbe5;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 250px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.term:hover {
+  transform: translateY(-5px);
+}
+
+/* Emoji styling */
+.emoji {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* Name heading */
+dt span:last-child {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: green; /* matches your screenshot */
+  margin-bottom: 10px;
+}
+
+/* Description text */
+dd {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.4;
+}

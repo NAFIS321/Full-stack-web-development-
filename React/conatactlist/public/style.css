@@ -1,0 +1,60 @@
+/* Reset some default browser styles */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f4f8;
+  text-align: center;
+}
+
+/* Heading style */
+header {
+  background-color: #00bcd4;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Card container */
+.note {
+  background-color: #e0f7fa;
+  border-radius: 12px;
+  width: 300px;
+  margin: 20px auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Hover effect */
+.note:hover {
+  transform: scale(1.05);
+}
+
+/* Card title */
+.note h2 {
+  margin: 10px 0;
+  font-size: 1.5rem;
+  color: #00796b;
+  display:flex;
+  flex:1;
+}
+
+/* Profile image */
+.note img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 15px 0;
+  border: 3px solid #00bcd4;
+}
+
+/* Contact details */
+.note p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #004d40;
+}
